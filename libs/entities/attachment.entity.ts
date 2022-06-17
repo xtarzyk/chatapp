@@ -2,13 +2,13 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 import { Message } from './message.entity'
 
 @Entity()
-export class User {
+export class Attachment {
   @PrimaryGeneratedColumn('uuid')
-  userId: number
+  attachmentId: number
 
   @Column()
-  userName: string
+  messageId: number
 
-  @OneToMany(() => Message, message => message.user)
-  messages: Array<Message>
+  @Column()
+  path: string
 }

@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Message } from './message.entity'
 
 @Entity()
 export class Room {
@@ -7,4 +8,7 @@ export class Room {
 
   @Column()
   roomName: string
+
+  @OneToMany(() => Message, message => message.room)
+  messages: Array<Message>
 }
