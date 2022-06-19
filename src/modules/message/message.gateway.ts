@@ -1,4 +1,5 @@
 import { 
+    MessageBody,
     OnGatewayConnection,
     OnGatewayDisconnect, 
     OnGatewayInit, 
@@ -8,6 +9,7 @@ import {
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
 import { MessageService } from './message.service'
+import { CreateMessageDto } from './dto/create-message.dto'
   
 @WebSocketGateway({
     cors: { 
@@ -16,7 +18,7 @@ import { MessageService } from './message.service'
 })
 export class MessageGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     
-    constructor(private messageService: MessageService) {}
+    constructor(private messagesService: MessageService) {}
   
     @WebSocketServer() server: Server;
     
@@ -29,10 +31,15 @@ export class MessageGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     handleDisconnect(client: Socket) {
       console.log(`Disconnected: ${client.id}`)
     }
-  
+
+    @SubscribeMessage('findAllMessages')
+    findAll() {
+      return this.messagesService.getMessages();
+    }
+
     @SubscribeMessage('createMessage')
-    handleMessage(client: Socket, text: string) {
-      return { event: 'messageToClient', data: text }
+    create(@MessageBody() createMessageDto: CreateMessageDto) {
+      return this.messagesService.createMessage(createMessageDto);
     }
 }
   

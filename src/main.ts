@@ -1,8 +1,19 @@
+import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import "reflect-metadata"
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
+  app.useGlobalPipes(new ValidationPipe({
+    transformOptions: {
+      enableImplicitConversion: true,
+    },
+    whitelist: true,
+    transform: true
+  }
+  ));
+  // app.enableCors();
   await app.listen(3001);
 }
 bootstrap();
