@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Room } from './room.entity'
 import { User } from './user.entity'
 
@@ -15,6 +15,9 @@ export class Message {
 
   @Column()
   text: string
+
+  @CreateDateColumn()
+  createdAt: Date
 
   @ManyToOne(() => User, user => user.messages)
   @JoinColumn({ name: 'userId'})
