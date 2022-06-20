@@ -1,9 +1,18 @@
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { Socket } from 'dgram';
+import { Room } from 'src/libs/entities/room.entity';
+import { Server } from 'typeorm';
+import { RoomService } from './room.service';
 
 @WebSocketGateway()
 export class RoomGateway {
-  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  constructor(private roomService: RoomService) {}
+
+  @WebSocketServer() server: Server;
+  
+  @SubscribeMessage('room')
+  async addUser(client: Socket, payload: string) {
+    await this.roomService.createUser(payload)
+    this.server.emit(payload)
   }
 }

@@ -1,9 +1,21 @@
-import { SubscribeMessage, WebSocketGateway } from '@nestjs/websockets';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets'
+import { Socket, Server } from 'socket.io'
+import { User } from 'src/libs/entities/user.entity'
+import { UserService } from './user.service'
 
-@WebSocketGateway()
+@WebSocketGateway({  
+  cors: {
+  origin: '*'
+  }
+})
 export class UserGateway {
-  @SubscribeMessage('message')
-  handleMessage(client: any, payload: any): string {
-    return 'Hello world!';
+  constructor(private userService: UserService) {}
+
+  @WebSocketServer() server: Server;
+  
+  @SubscribeMessage('name')
+  async addUser(client: Socket, payload: string) {
+    await this.userService.createUser(payload)
+    this.server.emit(payload)
   }
 }

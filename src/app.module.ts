@@ -26,6 +26,6 @@ import { RoomGateway } from './modules/room/room.gateway';
     RoomModule
   ],
   controllers: [],
-  providers: [UserGateway, RoomGateway],
+  providers: [],
 })
 export class AppModule {}
