@@ -6,7 +6,7 @@ export class Room {
   @PrimaryGeneratedColumn('uuid')
   roomId: number
 
-  @Column()
+  @Column({ unique: true })
   roomName: string
 
   @OneToMany(() => Message, message => message.room)

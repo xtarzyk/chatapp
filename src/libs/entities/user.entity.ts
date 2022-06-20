@@ -6,7 +6,7 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   userId: number
 
-  @Column()
+  @Column({ unique: true })
   userName: string
 
   @OneToMany(() => Message, message => message.user)
