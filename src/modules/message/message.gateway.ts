@@ -1,5 +1,4 @@
 import { 
-    MessageBody,
     OnGatewayConnection,
     OnGatewayDisconnect, 
     OnGatewayInit, 
@@ -9,7 +8,7 @@ import {
 } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
 import { MessageService } from './message.service'
-import { CreateMessageDto } from './dto/create-message.dto'
+import { Message } from 'src/libs/entities/message.entity'
   
 @WebSocketGateway({
     cors: { 
@@ -20,7 +19,7 @@ export class MessageGateway implements OnGatewayInit, OnGatewayConnection, OnGat
     
     constructor(private messagesService: MessageService) {}
   
-    @WebSocketServer() server: Server;
+    @WebSocketServer() server: Server
     
     afterInit(server: Server) {
       console.log(server)
@@ -34,12 +33,13 @@ export class MessageGateway implements OnGatewayInit, OnGatewayConnection, OnGat
 
     @SubscribeMessage('findAllMessages')
     findAll() {
-      return this.messagesService.getMessages();
+      return this.messagesService.getMessages()
     }
 
-    @SubscribeMessage('createMessage')
-    create(@MessageBody() createMessageDto: CreateMessageDto) {
-      return this.messagesService.createMessage(createMessageDto);
+    @SubscribeMessage('sendMessage')
+    async handleSendMessage(client: Socket, payload: Message) {
+      await this.messagesService.createMessage(payload)
+      this.server.emit('receiveMessage', payload)
     }
 }
   

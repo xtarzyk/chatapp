@@ -19,7 +19,7 @@ import { RoomGateway } from './modules/room/room.gateway';
       password: 'kajtek123',
       database: 'chat',
       entities: [Room, User, Message],
-      synchronize: false,
+      synchronize: true,
     }),
     MessageModule,
     UserModule,

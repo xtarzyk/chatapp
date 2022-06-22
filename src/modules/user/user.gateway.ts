@@ -18,4 +18,10 @@ export class UserGateway {
     await this.userService.createUser(payload)
     this.server.emit(payload)
   }
+
+  @SubscribeMessage('userName')
+  async getUserData(client: Socket, name: string) {
+    const userData = await this.userService.findByName(name)
+    this.server.emit('getUserData', userData)
+  }
 }

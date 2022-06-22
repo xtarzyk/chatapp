@@ -5,10 +5,14 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class RoomService {
-    constructor(@InjectRepository(Room) private userRepository: Repository<Room>) {}
+    constructor(@InjectRepository(Room) private roomRepository: Repository<Room>) {}
 
     async createUser(room: string) {
-        const newRoom = this.userRepository.create({ roomName: room})
-        return await this.userRepository.save(newRoom)
+        const newRoom = this.roomRepository.create({ roomName: room})
+        return await this.roomRepository.save(newRoom)
+    }
+
+    findByName(room: string) {
+        return this.roomRepository.findOne({ where: { roomName: room }})
     }
 }

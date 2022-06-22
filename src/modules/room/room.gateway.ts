@@ -15,4 +15,10 @@ export class RoomGateway {
     await this.roomService.createUser(payload)
     this.server.emit(payload)
   }
+
+  @SubscribeMessage('roomName')
+  async getUserData(client: Socket, room: string) {
+    const roomData = await this.roomService.findByName(room)
+    return this.server.emit('getRoomData', roomData)
+  }
 }
