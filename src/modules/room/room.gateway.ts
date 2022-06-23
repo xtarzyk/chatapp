@@ -11,14 +11,17 @@ export class RoomGateway {
   @WebSocketServer() server: Server;
   
   @SubscribeMessage('room')
-  async addUser(client: Socket, payload: string) {
-    await this.roomService.createUser(payload)
-    this.server.emit(payload)
+  async addUser(client: Socket, room: string) {
+    await this.roomService.createUser(room)
+      .catch(err => console.log(err))
+      
+    const roomData = await this.roomService.findByName(room)
+    this.server.emit('getRoomData', roomData)
   }
 
-  @SubscribeMessage('roomName')
-  async getUserData(client: Socket, room: string) {
-    const roomData = await this.roomService.findByName(room)
-    return this.server.emit('getRoomData', roomData)
-  }
+  // @SubscribeMessage('roomName')
+  // async getUserData(client: Socket, room: string) {
+  //   const roomData = await this.roomService.findByName(room)
+  //   return this.server.emit('getRoomData', roomData)
+  // }
 }

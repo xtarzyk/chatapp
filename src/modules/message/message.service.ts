@@ -12,16 +12,12 @@ export class MessageService {
         @InjectRepository(Message) private messageRepository: Repository<Message>,
         @InjectRepository(User) private userRepository: Repository<User>,
         @InjectRepository(Room) private roomRepository: Repository<Room>
+        
         ) {}
     
-
     async getMessages() {
         return await this.messageRepository.find()
     }
-
-    // getUserName(userId: number) {
-
-    // }
     
     async createMessage(message: Message) {
         return await this.messageRepository.save(message)

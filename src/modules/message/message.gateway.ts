@@ -31,7 +31,7 @@ export class MessageGateway implements OnGatewayInit, OnGatewayConnection, OnGat
       console.log(`Disconnected: ${client.id}`)
     }
 
-    @SubscribeMessage('findAllMessages')
+    @SubscribeMessage('getMessages')
     findAll() {
       return this.messagesService.getMessages()
     }

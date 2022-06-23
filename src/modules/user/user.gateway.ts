@@ -14,14 +14,17 @@ export class UserGateway {
   @WebSocketServer() server: Server;
   
   @SubscribeMessage('name')
-  async addUser(client: Socket, payload: string) {
-    await this.userService.createUser(payload)
-    this.server.emit(payload)
-  }
-
-  @SubscribeMessage('userName')
-  async getUserData(client: Socket, name: string) {
+  async addUser(client: Socket, name: string) {
+    await this.userService.createUser(name)
+      .catch(err => console.log(err))
+      
     const userData = await this.userService.findByName(name)
     this.server.emit('getUserData', userData)
   }
+
+  // @SubscribeMessage('userName')
+  // async getUserData(client: Socket, name: string) {
+  //   const userData = await this.userService.findByName(name)
+  //   this.server.emit('getUserData', userData)
+  // }
 }
