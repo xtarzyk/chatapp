@@ -5,7 +5,7 @@ import { UserService } from './user.service'
 
 @WebSocketGateway({  
   cors: {
-  origin: '*'
+    origin: '*'
   }
 })
 export class UserGateway {
@@ -21,10 +21,4 @@ export class UserGateway {
     const userData = await this.userService.findByName(name)
     this.server.emit('getUserData', userData)
   }
-
-  // @SubscribeMessage('userName')
-  // async getUserData(client: Socket, name: string) {
-  //   const userData = await this.userService.findByName(name)
-  //   this.server.emit('getUserData', userData)
-  // }
 }

@@ -8,7 +8,7 @@ export class RoomService {
     constructor(@InjectRepository(Room) private roomRepository: Repository<Room>) {}
 
     async createUser(room: string) {
-        const newRoom = this.roomRepository.create({ roomName: room})
+        const newRoom = this.roomRepository.create({ roomName: room })
         return await this.roomRepository.save(newRoom)
     }
 

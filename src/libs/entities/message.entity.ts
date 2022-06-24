@@ -14,14 +14,17 @@ export class Message {
   userId: number
 
   @Column()
+  userName: string
+
+  @Column()
   text: string
 
   @CreateDateColumn()
   createdAt: Date
 
   @ManyToOne(() => User, user => user.messages)
-  @JoinColumn({ name: 'userId'})
-  user: Array<Room>
+  @JoinColumn({ name: 'userId' })
+  user: Array<User>
 
   @ManyToOne(() => Room, room => room.messages)
   @JoinColumn({ name: 'roomId'})

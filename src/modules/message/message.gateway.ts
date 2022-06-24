@@ -11,7 +11,7 @@ import { MessageService } from './message.service'
 import { Message } from 'src/libs/entities/message.entity'
   
 @WebSocketGateway({
-    cors: { 
+    cors: {
       origin: '*' 
     }
 })
