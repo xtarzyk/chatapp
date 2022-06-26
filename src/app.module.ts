@@ -6,8 +6,7 @@ import { User } from 'src/libs/entities/user.entity';
 import { MessageModule } from './modules/message/index';
 import { RoomModule } from './modules/room/index';
 import { UserModule } from './modules/user/index';
-import { UserGateway } from './modules/user/user.gateway';
-import { RoomGateway } from './modules/room/room.gateway';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -23,7 +22,8 @@ import { RoomGateway } from './modules/room/room.gateway';
     }),
     MessageModule,
     UserModule,
-    RoomModule
+    RoomModule,
+    ChatModule
   ],
   controllers: [],
   providers: [],

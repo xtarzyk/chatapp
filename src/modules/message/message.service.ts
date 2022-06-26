@@ -4,16 +4,10 @@ import { Message } from 'src/libs/entities/message.entity';
 import { Room } from 'src/libs/entities/room.entity';
 import { User } from 'src/libs/entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateMessageDto } from './dto/create-message.dto';
 
 @Injectable()
 export class MessageService {
-    constructor(
-        @InjectRepository(Message) private messageRepository: Repository<Message>,
-        @InjectRepository(User) private userRepository: Repository<User>,
-        @InjectRepository(Room) private roomRepository: Repository<Room>
-        
-        ) {}
+    constructor(@InjectRepository(Message) private messageRepository: Repository<Message>) {}
     
     async getMessages() {
         return await this.messageRepository.find()

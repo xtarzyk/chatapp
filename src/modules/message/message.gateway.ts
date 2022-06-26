@@ -15,21 +15,10 @@ import { Message } from 'src/libs/entities/message.entity'
       origin: '*' 
     }
 })
-export class MessageGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
-    
+export class MessageGateway {
     constructor(private messagesService: MessageService) {}
   
     @WebSocketServer() server: Server
-    
-    afterInit(server: Server) {
-      console.log(server)
-    }
-    handleConnection(client: Socket, ...args: any[]) {
-      console.log(`Connected ${client.id}`)
-    }
-    handleDisconnect(client: Socket) {
-      console.log(`Disconnected: ${client.id}`)
-    }
 
     @SubscribeMessage('getMessages')
     findAll() {
